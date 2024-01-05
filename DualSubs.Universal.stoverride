@@ -1,585 +1,643 @@
-name: "🍿️ DualSubs: 🎦 Universal"
-desc: "流媒体平台字幕增强及双语模块，如需恢复TV完整支持，请配合“ iRingo: 📺 TV app”使用"
-openUrl: "http://boxjs.com/#/app/DualSubs.Universal"
-author: "VirgilClyne"
-homepage: "https://github.com/DualSubs"
-manual: "https://github.com/DualSubs/Universal/wiki/🍿-DualSubs:-🎦-Universal"
-icon: "https://github.com/DualSubs/Universal/raw/main/database/icon_rounded.png"
-
-http:
-  force-http-engine:
-    - "*.hls.pv-cdn.net"
-    - "*.hls.row.aiv-cdn.net"
-    - "*avodhlss3ww-a.akamaihd.net"
-    - "s3.amazonaws.com"
-    - "cf-timedtext.aux.pv-cdn.net"
-    - "d1v5ir2lpwr8os.cloudfront.net"
-    - "d22qjgkvxw22r6.cloudfront.net"
-    - "d25xi40x97liuc.cloudfront.net"
-    - "d27xxe7juh1us6.cloudfront.net"
-    - "dmqdd6hw24ucf.cloudfront.net"
-    - "assets.huluim.com"
-    - "vod-*.live.cf.md.bbci.co.uk"
-    - "vod-*-live.akamaized.net"
-  mitm:
-    - "play-edge.itunes.apple.com"
-    - "hls.itunes.apple.com"
-    - "hls-svod.itunes.apple.com"
-    - "play.itunes.apple.com"
-    - "vod-*.tv.apple.com"
-    - "*.media.dssott.com"
-    - "*.media.starott.com"
-    - "atv-ps.amazon.com"
-    - "atv-ps-fe.primevideo.com"
-    - "*.hls.pv-cdn.net"
-    - "*.hls.row.aiv-cdn.net"
-    - "*avodhlss3ww-a.akamaihd.net"
-    - "s3.amazonaws.com"
-    - "cf-timedtext.aux.pv-cdn.net"
-    - "d1v5ir2lpwr8os.cloudfront.net"
-    - "d22qjgkvxw22r6.cloudfront.net"
-    - "d25xi40x97liuc.cloudfront.net"
-    - "d27xxe7juh1us6.cloudfront.net"
-    - "dmqdd6hw24ucf.cloudfront.net"
-    - "*.prd.media.h264.io"
-    - "manifests.api.hbo.com"
-    - "manifests.v2.api.hbo.com"
-    - "*.hbomaxcdn.com"
-    - "vodmanifest.hulustream.com"
-    - "manifest-dp.hulustream.com"
-    - "livemanifest-f.hulustream.com"
-    - "live-sc.hulustream.com"
-    - "assets.huluim.com"
-    - "assetshuluimcom-a.akamaihd.net"
-    - "*-pplus.cbs.com"
-    - "vod-*.cbsaavideo.com"
-    - "vod-*.cbsivideo.com"
-    - "*.airspace-*.cbsivideo.com"
-    - "content-discovery.uplynk.com"
-    - "x-default-stgec.uplynk.com"
-    - "*-discovery1.uplynk.com"
-    - "dplus-ph-prod-vod.akamaized.net"
-    - "dplus-ph-google-v2.prod-vod.h264.io"
-    - "*.stream.peacocktv.com"
-    - "*.cdn.peacocktv.com"
-    - "*-vod.fubo.tv"
-    - "hls.ted.com"
-    - "pubads.g.doubleclick.net"
-    - "vod-*.live.cf.md.bbci.co.uk"
-    - "vod-*-live.akamaized.net"
-    - "api.britbox.com"
-    - "*.content.britbox.co.uk"
-    - "mecdn?.starz.com"
-    - "manifest.prod.boltdns.net"
-    - "ssaimanifest.prod.boltdns.net"
-    - "amcplus-?.akamaized.net"
-    - "redirector.playback.*.prod.deploys.brightcove.com"
-    - "ap-hls-vod.dynamic.showtime.com"
-    - "ap-hls-live.cdn?.showtime.com"
-    - "*.cssott.com"
-    - "manifest-viki.viki.io"
-    - "api.viki.io"
-    - "epixhls.akamaized.net"
-    - "*.live.epix.services"
-    - "media-production.nebula.app"
-    - "*.prd.pluto.tv"
-    - "*.plutotv.net"
-  script:
-    - match: ^https?:\/\/(play|play-edge|hls)\.itunes\.apple\.com\/WebObjects\/(MZPlay|MZPlayLocal)\.woa\/hls\/playlist\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/vod-(.+)-amt\.tv\.apple\.com\/itunes-assets\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(.+)_subtitles\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/vod-(.+)-amt\.tv\.apple\.com\/itunes-assets\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(.+)\.webvtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/vod-(.+)-amt\.tv\.apple\.com\/itunes-assets\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(.+)\.webvtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(play|play-edge|hls)\.itunes\.apple\.com\/WebObjects\/(MZPlay|MZPlayLocal)\.woa\/hls\/subscription\/playlist\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(play|play-edge|hls)\.itunes\.apple\.com\/WebObjects\/(MZPlay|MZPlayLocal)\.woa\/hls\/subscription\/stream\/playlist\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/vod-(.+)-svod\.tv\.apple\.com\/itunes-assets\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(.+)_subtitles_V\d\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/vod-(.+)-(aoc|svod)\.tv\.apple\.com\/itunes-assets\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(.+)\.webvtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/vod-(.+)-(aoc|svod)\.tv\.apple\.com\/itunes-assets\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(.+)\.webvtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(play|play-edge|hls)\.itunes\.apple\.com\/WebObjects\/(MZPlay|MZPlayLocal)\.woa\/hls\/workout\/playlist\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(hls|hls-svod)\.itunes\.apple\.com\/itunes-assets\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(.+)_subtitles_V\d\.m3u8
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(hls|hls-svod)\.itunes\.apple\.com\/itunes-assets\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(.+)\.webvtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(hls|hls-svod)\.itunes\.apple\.com\/itunes-assets\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(.+)\.webvtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(.+)\.media\.(dssott|starott)\.com\/(.+\/)?ps01\/disney\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(cbcs|ctr)-all-(.+)\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.media\.(dssott|starott)\.com\/(.+\/)?ps01\/disney\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/r\/(.*)(composite_(.+)|subtitles)\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.media\.(dssott|starott)\.com\/(.+\/)?ps01\/disney\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/r\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.media\.(dssott|starott)\.com\/(.+\/)?ps01\/disney\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/r\/(.+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(.+)(\.(hls)\.(pv-cdn|row\.aiv-cdn)|avodhlss3ww-a\.akamaihd)\.net\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)(\.(hls|dash)\.(pv-cdn|row\.aiv-cdn)|avodhlss3ww-a\.akamaihd)\.net\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})_subtitles\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)(\.(hls|dash)\.(pv-cdn|row\.aiv-cdn)|avodhlss3ww-a\.akamaihd)\.net\/(.+)\/aiv-prod-timedtext\/(.+)\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/s3\.amazonaws\.com\/aiv-prod-timedtext\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(d1v5ir2lpwr8os|d22qjgkvxw22r6|d25xi40x97liuc|d27xxe7juh1us6|dmqdd6hw24ucf)\.cloudfront\.net\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/s3\.amazonaws\.com\/aiv-prod-timedtext\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\.(vtt|ttml2)\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(d1v5ir2lpwr8os|d22qjgkvxw22r6|d25xi40x97liuc|d27xxe7juh1us6|dmqdd6hw24ucf)\.cloudfront\.net\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\.(vtt|ttml2)\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/s3\.amazonaws\.com\/aiv-prod-timedtext\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\.(vtt|ttml2)\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(d1v5ir2lpwr8os|d22qjgkvxw22r6|d25xi40x97liuc|d27xxe7juh1us6|dmqdd6hw24ucf)\.cloudfront\.net\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\.(vtt|ttml2)\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(cf|akm|gcp|fly|.+)\.pro?d\.media\.h264\.io\/r\/hls\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(cf|akm|gcp|fly|.+)\.pro?d\.media\.h264\.io\/r\/hlsMedia\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(cf|akm|gcp|fly|.+)\.pro?d\.media\.h264\.io\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(cf|akm|gcp|fly|.+)\.pro?d\.media\.h264\.io\/(.+)\.vtt
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/manifests(\.v2)?\.api\.hbo\.com\/hls\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/manifests(\.v2)?\.api\.hbo\.com\/hlsMedia\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.hbomaxcdn\.com\/videos\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.hbomaxcdn\.com\/videos\/(.+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/vodmanifest\.hulustream\.com\/hulu\/v1\/hls\/multivariant\/(\d+)\/playlist\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/manifest-dp\.hulustream\.com\/hls\/(\d+)\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/vodmanifest\.hulustream\.com\/hulu\/v1\/hls\/vtt\/(\d+)\/playlist\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/manifest-dp\.hulustream\.com\/webvtt\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(assets\.huluim\.com|assetshuluimcom-a\.akamaihd\.net)\/captions_webvtt\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(assets\.huluim\.com|assetshuluimcom-a\.akamaihd\.net)\/captions_webvtt\/(.+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(vod-(.+)|(.+)\.airspace-(.+)|(.+)-pplus)\.(cbsaavideo|cbsivideo|cbs)\.com\/(.+)\/(master|manifest)\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(vod-(.+)|(.+)\.airspace-(.+)|(.+)-pplus)\.(cbsaavideo|cbsivideo|cbs)\.com\/(.+)\/(stream_vtt|manifest_.*)\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(vod-(.+)|(.+)\.airspace-(.+)|(.+)-pplus)\.(cbsaavideo|cbsivideo|cbs)\.com\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/cc\.cbs\.com\/closedcaption\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(vod-(.+)|(.+)\.airspace-(.+)|(.+)-pplus)\.(cbsaavideo|cbsivideo|cbs)\.com\/(.+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/cc\.cbs\.com\/closedcaption\/(.+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/content-discovery\.uplynk\.com\/(.+)\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/dplus-ph-(prod-vod\.akamaized\.net|google-v2\.prod-vod\.h264\.io)\/(.+)\/master\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/dplus-ph-(prod-vod\.akamaized\.net|google-v2\.prod-vod\.h264\.io)\/(.+)\/captions\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/dplus-ph-(prod-vod\.akamaized\.net|google-v2\.prod-vod\.h264\.io)\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/dplus-ph-(prod-vod\.akamaized\.net|google-v2\.prod-vod\.h264\.io)\/(.+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(.+)\.cdn\.peacocktv\.com\/pub\/global\/(.+)\/cmaf\/(.+)\/master_cmaf\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.cdn\.peacocktv\.com\/pub\/global\/(.+)\/cmaf\/(.+)\/[^\/]*subtitles[^\/]*\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.cdn\.peacocktv\.com\/pub\/global\/(.+)\/cmaf\/(.+)\/[^\/]*subtitles[^\/]*\.webvtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.cdn\.peacocktv\.com\/pub\/global\/(.+)\/cmaf\/(.+)\/[^\/]*subtitles[^\/]*\.webvtt
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(.+)-vod\.fubo\.tv\/(.+)\/manifests\/master\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)-vod\.fubo\.tv\/(.+)\/manifests\/subtitles\/(.+)\/media\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)-vod\.fubo\.tv\/(.+)\/manifests\/subtitles\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)-vod\.fubo\.tv\/(.+)\/manifests\/subtitles\/(.+)\.vtt
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/hls\.ted\.com\/(.+)\/manifest\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/hls\.ted\.com\/(.+)\/subtitles\/(.+)\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/hls\.ted\.com\/(.+)\/subtitles\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/hls\.ted\.com\/(.+)\/subtitles\/(.+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/pubads\.g\.doubleclick\.net\/ondemand\/hls\/content\/(.+)\/master\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/pubads\.g\.doubleclick\.net\/ondemand\/hls\/content\/(.+)\/media\/tt-(.+)\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/pubads\.g\.doubleclick\.net\/ondemand\/hls\/content\/(.+)\/(hls-webvtt|vtt)\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/pubads\.g\.doubleclick\.net\/ondemand\/hls\/content\/(.+)\/(hls-webvtt|vtt)\/(.+)\.vtt
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/vod-hls-(.+)(\.live\.cf\.md\.bbci\.co\.uk|-live\.akamaized\.net)\/(.+)_hls_master\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.content\.britbox\.co\.uk\/(.+)\.ism\/\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.content\.britbox\.co\.uk\/(.+)\.ism\/(.+)-textstream(.+)\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.content\.britbox\.co\.uk\/(.+)\.ism\/(.+)-textstream(.+)\.webvtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.content\.britbox\.co\.uk\/(.+)\/Subtitles\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.content\.britbox\.co\.uk\/(.+)\.ism\/(.+)-textstream(.+)\.webvtt
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.content\.britbox\.co\.uk\/(.+)\/Subtitles\/(.+)\.vtt
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/api\.britbox\.com\/v1\/subtitles\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/api\.britbox\.com\/v1\/subtitles
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(.+)\.starz\.com\/(.+)\/(.+)_HLS_(.+)\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.starz\.com\/(.+)\/captions\/(.+)\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.starz\.com\/(.+)\/captions\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.starz\.com\/(.+)\/captions\/(.+)\.vtt
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/ssaimanifest\.prod\.boltdns\.net\/(.+)\/playback\/once\/v1\/hls\/(.+)\/content\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/ssaimanifest\.prod\.boltdns\.net\/(.+)\/playback\/once\/v1\/hls\/(.+)\/subtitle_(.+)\/media\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/amcplus-(.+)\.akamaized\.net\/composite-media\/v1\/hls\/(.+)\/segment(\d+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/redirector\.playback\.(.+)\.prod\.deploys\.brightcove\.com\/v1\/(.+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/amcplus-(.+)\.akamaized\.net\/composite-media\/v1\/hls\/(.+)\/segment(\d+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/redirector\.playback\.(.+)\.prod\.deploys\.brightcove\.com\/v1\/(.+)\.vtt
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/ap-hls-vod\.dynamic\.showtime\.com/(.+)\/(tv|mobile)_master\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/ap-hls-vod\.cdn\d\.showtime.com\/live\/sho(e|w)ast\/showtime.isml\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(.+)\.cssott\.com\/(.+)\/mpeg_cbcs\/master_manifest_(.+)\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.cssott\.com\/(.+)\/mpeg_cbcs\/(.+)\/(.+)\.subtitles\.\d+\.m3u8
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.cssott\.com\/(.+)\/mpeg_cbcs\/(.+)\/(.+)\.subtitles\.\d+\.split\.\d+\.webvtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.cssott\.com\/(.+)\/mpeg_cbcs\/(.+)\/(.+)\.subtitles\.\d+\.split\.\d+\.webvtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/manifest-viki\.viki\.io\/(.+)\/manifest\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/manifest-viki\.viki\.io\/(.+)\/streams\/(.+)\/subtitles\.m3u8
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/api\.viki\.io\/(.+)\/auth_subtitles\/(\w+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/api\.viki\.io\/(.+)\/auth_subtitles\/(\w+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/epixhls\.akamaized\.net\/(vam|movies)\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\/(master|prog_index|playlist_\d+)\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/epixhls\.akamaized\.net\/(vam|movies)\/(.+)\/subtitles\/(.+)\/media\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/epixhls\.akamaized\.net\/(vam|movies)\/(.+)\/subtitles\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/epixhls\.akamaized\.net\/(vam|movies)\/(.+)\/captions_\d+\/(.+)\/fileSequence\d+\.webvtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/epixhls\.akamaized\.net\/(vam|movies)\/(.+)\/subtitles\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/epixhls\.akamaized\.net\/(vam|movies)\/(.+)\/captions_\d+\/(.+)\/fileSequence\d+\.webvtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/epixhls\.akamaized\.net\/(vam|movies)\/(.+)\/subtitles\/(.+)\/([0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(.+)\.live\.epix\.services\/out\/(.+)\/index\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.live\.epix\.services\/out\/(.+)\/index_5_\d+\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.live\.epix\.services\/out\/(.+)\/index_5_\d+_\d+\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.live\.epix\.services\/out\/(.+)\/index_5_\d+_\d+\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/media-production\.nebula\.app\/(.+)\/(all|avc_hevc|avc)\.(\w+)\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/media-production\.nebula\.app\/(.+)\/subtitles\/(.+)\/media\.(\w+)\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/media-production\.nebula\.app\/(.+)\/subtitles\/(.+)\/main\.(\w+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/media-production\.nebula\.app\/(.+)\/subtitles\/(.+)\/main\.(\w+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-    - match: ^https?:\/\/(.+)\.prd\.pluto\.tv\/v2\/stitch\/hls\/(channel|episode)\/(\w+)\/master\.m3u8
-      name: DualSubs.Master.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.prd\.pluto\.tv\/v2\/stitch\/hls\/(channel|episode)\/(\w+)\/subtitle\/(\w+)\/playlist\.m3u8\?(.*)subtype=
-      name: DualSubs.Subtitles.m3u8.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.plutotv\.net\/(.+)\/hls\/(.+)\/(\w+\.m3u8_)?(\d+)\.vtt\?(.*)subtype=(Official|External)
-      name: DualSubs.Subtitles.Composite.response
-      type: response
-      require-body: true
-    - match: ^https?:\/\/(.+)\.plutotv\.net\/(.+)\/hls\/(.+)\/(\w+\.m3u8_)?(\d+)\.vtt\?(.*)subtype=Translate
-      name: DualSubs.Subtitles.Translate.response
-      type: response
-      require-body: true
-
-script-providers:
-  DualSubs.Master.m3u8.response:
-    url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Master.m3u8.response.js
-    interval: 86400
-  DualSubs.Subtitles.m3u8.response:
-    url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.m3u8.response.js
-    interval: 86400
-  DualSubs.Subtitles.Composite.response:
-    url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Composite.response.js
-    interval: 86400
-  DualSubs.Subtitles.Translate.response:
-    url: https://raw.githubusercontent.com/DualSubs/Universal/main/js/DualSubs.Subtitles.Translate.response.js
-    interval: 86400
+#EXTM3U
+#EXTINF:-1 group-title="4K",8K测试
+http://[2409:8087:2001:20:2800:0:df6e:eb04]/wh7f454c46tW1782571424_-1576923679/ott.mobaibox.com/PLTV/3/224/3221228132/index.m3u8
+#EXTINF:-1 group-title="4K",爱上4K 
+http://[2409:8087:5e01:34::23]:6610/ZTE_CMS/00000001000000060000000000000459/index.m3u8?IAS
+#EXTINF:-1 group-title="4K",4K 修复
+http://[2409:8087:2001:20:2800:0:df6e:eb15]/ott.mobaibox.com/PLTV/3/224/3221228141/index.m3u8
+#EXTINF:-1 tvg-name="纯享4K" group-title="4K",纯享 4K
+http://[2409:8087:2001:20:2800:0:df6e:eb10]:80/ott.mobaibox.com/PLTV/4/224/3221228242/index.m3u8
+#EXTINF:-1 tvg-name="欢笑剧场" group-title="4K",SiTV欢笑剧场4K 
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002156/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 tvg-name="null" group-title="4K",华数4K
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000003000004748/index.m3u8?channel-id=wasusyt&Contentid=6000000003000004748&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="CCTV1" group-title="央视",CCTV1 4K
+http://[2409:8087:2001:20:2800:0:df6e:eb03]:80/PLTV/1/224/3221230805/1.m3u8
+#EXTINF:-1 tvg-name="CCTV1" group-title="央视",CCTV5 4K
+http://[2409:8087:2001:20:2800:0:df6e:eb22]/ott.mobaibox.com/PLTV/4/224/3221228502/index.m3u8
+#EXTINF:-1 tvg-name="CCTV16" group-title="央视",CCTV16 4K
+http://[2409:8087:2001:20:2800:0:df6e:eb18]/ott.mobaibox.com/PLTV/3/224/3221228127/index.m3u8
+#EXTINF:-1 tvg-name="纯享4K" group-title="央视",CCTV4K
+http://[2409:8087:2001:20:2800:0:df6e:eb12]/ott.mobaibox.com/PLTV/3/224/3221228228/index.m3u8
+#EXTINF:-1 tvg-name="CCTV8K" group-title="央视",CCTV8K
+http://[2409:8087:2001:20:2800:0:df6e:eb03]/ott.mobaibox.com/PLTV/4/224/3221228165/index.m3u8
+#EXTINF:-1 tvg-name="CCTV1" group-title="央视",CCTV1
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001022/index.m3u8?
+#EXTINF:-1 tvg-name="CCTV2" group-title="央视",CCTV2
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001220/index.m3u8?
+#EXTINF:-1 tvg-name="CCTV3" group-title="央视",CCTV3
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001186/index.m3u8?
+#EXTINF:-1 tvg-name="CCTV4" group-title="央视",CCTV4
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001221/index.m3u8?
+#EXTINF:-1 tvg-name="CCTV5" group-title="央视",CCTV5
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001187/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV5+" group-title="央视",CCTV5+
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001334/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 tvg-name="CCTV6" group-title="央视",CCTV6
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001188/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV7" group-title="央视",CCTV7
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001236/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV8" group-title="央视",CCTV8
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001189/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV9" group-title="央视",CCTV9
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001237/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV10" group-title="央视",CCTV10
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001238/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV11" group-title="央视",CCTV11
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001309/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV12" group-title="央视",CCTV12
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001239/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV13" group-title="央视",CCTV13
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001328/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV14" group-title="央视",CCTV14
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001240/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV15" group-title="央视",CCTV15
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001338/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV16" group-title="央视",CCTV16
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001258/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CCTV17" group-title="央视",CCTV17
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001241/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="兵器科技" group-title="央视",CCTV兵器科技
+http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226975/index.m3u8
+#EXTINF:-1 tvg-name="怀旧剧场" group-title="央视",CCTV怀旧剧场
+http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226972/index.m3u8
+#EXTINF:-1 tvg-name="世界地理" group-title="央视",CCTV世界地理
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002485/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 tvg-name="文化精品" group-title="央视",CCTV文化精品
+http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226981/index.m3u8
+#EXTINF:-1 tvg-name="央视台球" group-title="央视",CCTV央视台球
+http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226956/index.m3u8
+#EXTINF:-1 tvg-name="央视高网" group-title="央视",CCTV央视高网
+http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226978/index.m3u8
+#EXTINF:-1 tvg-name="风云剧场" group-title="央视",CCTV风云剧场
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002505/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 tvg-name="第一剧场" group-title="央视",CCTV第一剧场
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002498/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 tvg-name="风云足球" group-title="央视",CCTV风云足球
+http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226984/index.m3u8
+#EXTINF:-1 tvg-name="电视指南" group-title="央视",CCTV电视指南
+http://[2409:8087:7001:20:2::3]:80/dbiptv.sn.chinamobile.com/PLTV/88888893/224/3221226987/index.m3u8
+#EXTINF:-1 tvg-name="风云音乐" group-title="央视",CCTV风云音乐
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002525/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 tvg-name="女性时尚" group-title="央视",CCTV女性时尚
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002475/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 tvg-name="CETV1" group-title="央视",CETV1
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001020/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CETV4" group-title="央视",CETV4
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001348/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="CGTV" group-title="央视",CGTV
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001024/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 tvg-name="湖南卫视" group-title="卫视",湖南卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001026/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="浙江卫视" group-title="卫视",浙江卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001023/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="江苏卫视" group-title="卫视",江苏卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001033/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="东方卫视" group-title="卫视",东方卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001013/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="广东卫视" group-title="卫视",广东卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001032/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="广西卫视" group-title="卫视",广西卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001224/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="深圳卫视" group-title="卫视",深圳卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001030/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="北京卫视" group-title="卫视",北京卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001029/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="东南卫视" group-title="卫视",东南卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001201/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="四川卫视" group-title="卫视",四川卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001130/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="天津卫视" group-title="卫视",天津卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001036/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="安徽卫视" group-title="卫视",安徽卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001037/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="山东卫视" group-title="卫视",山东卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001028/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="江西卫视" group-title="卫视",江西卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001034/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="河北卫视" group-title="卫视",河北卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001229/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="河南卫视" group-title="卫视",河南卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001222/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="海南卫视" group-title="卫视",海南卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001183/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="湖北卫视" group-title="卫视",湖北卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001027/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="贵州卫视" group-title="卫视",贵州卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001184/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="辽宁卫视" group-title="卫视",辽宁卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001035/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="重庆卫视" group-title="卫视",重庆卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001129/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="甘肃卫视" group-title="卫视",甘肃卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001298/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="吉林卫视" group-title="卫视",吉林卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001225/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="云南卫视" group-title="卫视",云南卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001223/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="三沙卫视" group-title="卫视",三沙卫视
+http://[2409:8087:5e01:34::21]:6610/ZTE_CMS/08984400000000060000000000000319/index.m3u8?IAS
+#EXTINF:-1 tvg-name="黑龙江卫视" group-title="卫视",黑龙江卫视
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001031/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="凤凰香港" group-title="数字",凤凰香港
+http://[2409:8087:2001:20:2800:0:df6e:eb1d]/ott.mobaibox.com/PLTV/3/224/3221228530/1.m3u8
+#EXTINF:-1 tvg-name="凤凰中文" group-title="数字",凤凰中文
+http://[2409:8087:2001:20:2800:0:df6e:eb27]/ott.mobaibox.com/PLTV/3/224/3221228524/index.m3u8
+#EXTINF:-1 tvg-name="凤凰资讯" group-title="数字",凤凰资讯
+http://[2409:8087:2001:20:2800:0:df6e:eb24]/ott.mobaibox.com/PLTV/3/224/3221228527/index.m3u8
+#EXTINF:-1 tvg-name="第一财经" group-title="数字",第一财经
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001017/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="金鹰纪实" group-title="数字",金鹰纪实
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001230/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="纪实人文" group-title="数字",纪实人文
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001019/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="纪实科教" group-title="数字",纪实科教
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001329/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 tvg-name="求索动物" group-title="数字",求索动物
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000002000010046/index.m3u8?channel-id=wasusyt&Contentid=6000000002000010046&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="求索生活" group-title="数字",求索生活
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000002000003382/index.m3u8?channel-id=wasusyt&Contentid=6000000002000003382&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="求索科学" group-title="数字",求索科学
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000002000032344/index.m3u8?channel-id=wasusyt&Contentid=6000000002000032344&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="求索纪录" group-title="数字",求索纪录
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000002000032052/index.m3u8?channel-id=wasusyt&Contentid=6000000002000032052&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="卡酷少儿" group-title="数字",卡酷少儿
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001245/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="哈哈炫动" group-title="数字",哈哈炫动
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001232/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="精彩综艺" group-title="数字",精彩综艺
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000001273/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 tvg-name="null" group-title="数字",精彩影视
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000320630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000320630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="CHC动作电影" group-title="数字",CHC动作电影
+http://[2409:8087:7000:20::4]/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226465/index.m3u8
+#EXTINF:-1 tvg-name="CHC 高清电影" group-title="数字",CHC高清电影
+http://[2409:8087:7000:20::4]/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226463/index.m3u8
+#EXTINF:-1 tvg-name="CHC家庭影院" group-title="数字",CHC家庭影院
+http://[2409:8087:7000:20::4]/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226462/index.m3u8
+#EXTINF:-1 tvg-name="生活时尚" group-title="数字",SiTV五星体育
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001018/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="东方财经" group-title="数字",SiTV东方财经
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001318/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="欢笑剧场" group-title="数字",SiTV欢笑剧场
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001193/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="法治天地" group-title="数字",SiTV法治天地
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001195/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="七彩戏剧" group-title="数字",SiTV七彩戏剧
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001308/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="乐游" group-title="数字",SiTV乐游
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001200/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="动漫秀场" group-title="数字",SiTV动漫秀场
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001196/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="游戏风云" group-title="数字",SiTV游戏风云
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001192/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="生活时尚" group-title="数字",SiTV生活时尚
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001199/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="都市剧场" group-title="数字",SiTV都市剧场
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001203/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="金色学堂" group-title="数字",SiTV金色学堂
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001194/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="超级电影" group-title="数字",NewTv超级电影
+http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225717/index.m3u8
+#EXTINF:-1 tvg-name="超级电视剧" group-title="数字",NewTv超级电视剧
+http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225716/index.m3u8
+#EXTINF:-1 tvg-name="超级体育" group-title="数字",NewTv超级体育
+http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225715/index.m3u8
+#EXTINF:-1 tvg-name="超级综艺" group-title="数字",NewTv超级综艺
+http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225714/index.m3u8
+#EXTINF:-1 tvg-name="金牌综艺" group-title="数字",NewTv金牌综艺
+http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225666/index.m3u8
+#EXTINF:-1 tvg-name="东北热剧" group-title="数字",NewTv东北热剧
+http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225741/index.m3u8
+#EXTINF:-1 tvg-name="精品萌宠" group-title="数字",NewTv精品萌宠
+http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226505/index.m3u8
+#EXTINF:-1 tvg-name="哒啵电竞" group-title="数字",NewTv哒啵电竞
+http://[2409:8087:7000:20::4]/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226951/index.m3u8
+#EXTINF:-1 tvg-name="哒啵赛事" group-title="数字",NewTv哒啵赛事
+http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225675/index.m3u8
+#EXTINF:-1 tvg-name="欢乐剧场" group-title="数字",NewTv欢乐剧场
+http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225742/index.m3u8
+#EXTINF:-1 tvg-name="黑莓动画" group-title="数字",NewTv黑莓动画
+http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225662/index.m3u8
+#EXTINF:-1 tvg-name="黑莓电影" group-title="数字",NewTv黑莓电影
+http://[2409:8087:2001:20:2800:0:df6e:eb04]/ott.mobaibox.com/PLTV/3/224/3221225567/index.m3u8
+#EXTINF:-1 tvg-name="怡伴健康" group-title="数字",NewTv怡伴健康
+http://[2409:8087:2001:20:2800:0:df6e:eb19]/wh7f454c46tw1986735481_995129881/ott.mobaibox.com/PLTV/3/224/3221227612/index.m3u8
+#EXTINF:-1 tvg-name="潮妈辣婆" group-title="数字",NewTv潮妈辣婆
+http://[2409:8087:2001:20:2800:0:df6e:eb19]/wh7f454c46tw1705588260_46164741/ott.mobaibox.com/PLTV/3/224/3221227527/index.m3u8
+#EXTINF:-1 tvg-name="军旅剧场" group-title="数字",NewTv军旅剧场
+http://[2409:8087:2001:20:2800:0:df6e:eb06]/wh7f454c46tw1807611386_-262631246/ott.mobaibox.com/PLTV/3/224/3221227603/index.m3u8
+#EXTINF:-1 tvg-name="中国功夫" group-title="数字",NewTv中国功夫
+http://[2409:8087:2001:20:2800:0:df6e:eb19]/wh7f454c46tw1934355864_2070028581/ott.mobaibox.com/PLTV/3/224/3221227530/index.m3u8
+#EXTINF:-1 tvg-name="农业致富" group-title="数字",NewTv农业致富
+http://[2409:8087:2001:20:2800:0:df6e:eb18]/wh7f454c46tw2105966330_1690115505/ott.mobaibox.com/PLTV/3/224/3221227588/index.m3u8
+#EXTINF:-1 tvg-name="动作电影" group-title="数字",NewTv动作电影
+http://[2409:8087:2001:20:2800:0:df6e:eb06]/wh7f454c46tw2169742343_-422728889/ott.mobaibox.com/PLTV/3/224/3221227606/index.m3u8
+#EXTINF:-1 tvg-name="家庭剧场" group-title="数字",NewTv家庭剧场
+http://[2409:8087:2001:20:2800:0:df6e:eb06]/wh7f454c46tw3441504651_1879058580/ott.mobaibox.com/PLTV/3/224/3221227600/index.m3u8
+#EXTINF:-1 tvg-name="惊悚悬疑" group-title="数字",NewTv惊悚悬疑
+http://[2409:8087:2001:20:2800:0:df6e:eb18]/wh7f454c46tw2482771376_951312812/ott.mobaibox.com/PLTV/3/224/3221227536/index.m3u8
+#EXTINF:-1 tvg-name="武博世界" group-title="数字",NewTv武博世界
+http://[2409:8087:2001:20:2800:0:df6e:eb19]/wh7f454c46tw2554338791_49940138/ott.mobaibox.com/PLTV/3/224/3221227533/index.m3u8
+#EXTINF:-1 tvg-name="炫舞未来" group-title="数字",NewTv炫舞未来
+http://[2409:8087:2001:20:2800:0:df6e:eb09]/wh7f454c46tw2582593423_1721070986/ott.mobaibox.com/PLTV/3/224/3221227475/index.m3u8
+#EXTINF:-1 tvg-name="爱情喜剧" group-title="数字",NewTv爱情喜剧
+http://[2409:8087:2001:20:2800:0:df6e:eb1a]/wh7f454c46tw2778199896_-991379679/ott.mobaibox.com/PLTV/3/224/3221227548/index.m3u8
+#EXTINF:-1 tvg-name="精品体育" group-title="数字",NewTv精品体育
+http://[2409:8087:2001:20:2800:0:df6e:eb1b]/wh7f454c46tw2797725038_-2054878207/ott.mobaibox.com/PLTV/3/224/3221227615/index.m3u8
+#EXTINF:-1 tvg-name="精品大剧" group-title="数字",NewTv精品大剧
+http://[2409:8087:2001:20:2800:0:df6e:eb1a]/wh7f454c46tw2817459161_-1430429466/ott.mobaibox.com/PLTV/3/224/3221227618/index.m3u8
+#EXTINF:-1 tvg-name="军事评论" group-title="数字",NewTv军事评论
+http://[2409:8087:2001:20:2800:0:df6e:eb18]/wh7f454c46tw3373254713_-1111569189/ott.mobaibox.com/PLTV/3/224/3221227544/index.m3u8
+#EXTINF:-1 tvg-name="精品记录" group-title="数字",NewTv精品记录
+http://[2409:8087:2001:20:2800:0:df6e:eb1a]/wh7f454c46tw2837435881_530071425/ott.mobaibox.com/PLTV/3/224/3221227547/index.m3u8
+#EXTINF:-1 tvg-name="明星大片" group-title="数字",NewTv明星大片
+http://[2409:8087:2001:20:2800:0:df6e:eb18]/wh7f454c46tw2856695654_946966165/ott.mobaibox.com/PLTV/3/224/3221227594/index.m3u8
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱悬疑
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000050630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000050630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱电竞
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000230630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000230630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱谍战
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000070630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000070630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱动漫
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000280630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000280630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱都市
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000080630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000080630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱怀旧
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000260630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000260630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱极限
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000170630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000170630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱家庭
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000090630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000090630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱江湖
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000110630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000110630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱解密
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000200630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000200630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱经典
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000060630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000060630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱科幻
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000020630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000020630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱科学
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000160630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000160630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱浪漫
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000040630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000040630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱历史
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000150630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000150630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱猎奇
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000190630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000190630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱旅行
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000250630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000250630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱美食
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000120630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000120630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱奇谈
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000270630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000270630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱青春
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000100630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000100630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱赛车
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000240630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000240630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱时尚
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000140630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000140630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱世界
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000210630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000210630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱探索
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000300630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000300630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱体育
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000290630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000290630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱玩具
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000220630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000220630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱喜剧
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000010630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000010630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱幼教
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000180630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000180630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱娱乐
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000130630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000130630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="null" group-title="数字",iHOT爱院线
+http://[2409:8087:7001:20:1000::95]:6610/000000001000/6000000006000030630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000030630&livemode=1&stbId=3
+#EXTINF:-1 tvg-name="快乐垂钓" group-title="数字",快乐垂钓
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001235/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="茶频道" group-title="数字",茶频道
+http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001234/index.m3u8?love=freedom
+#EXTINF:-1 tvg-name="中国交通" group-title="数字",中国交通
+http://[2409:8087:5e01:34::20]:6610/ZTE_CMS/08984400000000060000000000000438/index.m3u8?IAS
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播4K-1
+http://[2409:8087:1a01:df::4001]/PLTV/88888888/224/3221225655/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播4K-2
+http://[2409:8087:1a01:df::4005]/PLTV/88888888/224/3221225651/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-1
+http://[2409:8087:1a01:df::4023]/PLTV/88888888/224/3221225611/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-2
+http://[2409:8087:1a01:df::4005]/PLTV/88888888/224/3221225613/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-3
+http://[2409:8087:1a01:df::4014]/PLTV/88888888/224/3221225617/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-4
+http://[2409:8087:1a01:df::4017]/PLTV/88888888/224/3221225619/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-5
+http://[2409:8087:1a01:df::4058]/PLTV/88888888/224/3221225620/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-6
+http://[2409:8087:1a01:df::4015]/PLTV/88888888/224/3221225639/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-7
+http://[2409:8087:1a01:df::4015]/PLTV/88888888/224/3221225641/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-8
+http://[2409:8087:1a01:df::4011]/PLTV/88888888/224/3221225643/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-9
+http://[2409:8087:1a01:df::4002]/PLTV/88888888/224/3221225645/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-10
+http://[2409:8087:1a01:df::4016]/PLTV/88888888/224/3221225647/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-11
+http://[2409:8087:1a01:df::4022]/PLTV/88888888/224/3221225648/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-12
+http://[2409:8087:1a01:df::4003]/PLTV/88888888/224/3221225649/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-13
+http://[2409:8087:1a01:df::4003]/PLTV/88888888/224/3221225650/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-14
+http://[2409:8087:1a01:df::4014]/PLTV/88888888/224/3221225652/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-15
+http://[2409:8087:1a01:df::4013]/PLTV/88888888/224/3221225653/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-16
+http://[2409:8087:1a01:df::4017]/PLTV/88888888/224/3221225654/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-17
+http://[2409:8087:1a01:df::4019]/PLTV/88888888/224/3221225658/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-18
+http://[2409:8087:1a01:df::4012]/PLTV/88888888/224/3221225660/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-19
+http://[2409:8087:1a01:df::4023]/PLTV/88888888/224/3221225662/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-20
+http://[2409:8087:1a01:df::4062]/PLTV/88888888/224/3221225733/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-21
+http://[2409:8087:1a01:df::4048]/PLTV/88888888/224/3221225735/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-22
+http://[2409:8087:1a01:df::4025]/PLTV/88888888/224/3221225737/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-23
+http://[2409:8087:1a01:df::4074]/PLTV/88888888/224/3221225739/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-24
+http://[2409:8087:1a01:df::4070]/PLTV/88888888/224/3221225741/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-25
+http://[2409:8087:1a01:df::4050]/PLTV/88888888/224/3221225745/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-26
+http://[2409:8087:1a01:df::4050]/PLTV/88888888/224/3221225747/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-27
+http://[2409:8087:1a01:df::4039]/PLTV/88888888/224/3221225749/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-28
+http://[2409:8087:1a01:df::4030]/PLTV/88888888/224/3221225754/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-29
+http://[2409:8087:1a01:df::4025]/PLTV/88888888/224/3221225756/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-30
+http://[2409:8087:1a01:df::4077]/PLTV/88888888/224/3221225758/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-31
+http://[2409:8087:1a01:df::4025]/PLTV/88888888/224/3221225760/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-32
+http://[2409:8087:1a01:df::4039]/PLTV/88888888/224/3221225762/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-33
+http://[2409:8087:1a01:df::4050]/PLTV/88888888/224/3221225764/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-34
+http://[2409:8087:1a01:df::4027]/PLTV/88888888/224/3221225766/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-35
+http://[2409:8087:1a01:df::4050]/PLTV/88888888/224/3221225768/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-36
+http://[2409:8087:1a01:df::4078]/PLTV/88888888/224/3221225782/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-37
+http://[2409:8087:1a01:df::4002]/PLTV/88888888/224/3221225895/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-38
+http://[2409:8087:1a01:df::4028]/PLTV/88888888/224/3221225897/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-39
+http://[2409:8087:1a01:df::4061]/PLTV/88888888/224/3221225899/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-40
+http://[2409:8087:1a01:df::4009]/PLTV/88888888/224/3221225901/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-41
+http://[2409:8087:1a01:df::4023]/PLTV/88888888/224/3221225903/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-42
+http://[2409:8087:1a01:df::4079]/PLTV/88888888/224/3221225904/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-43
+http://[2409:8087:1a01:df::4051]/PLTV/88888888/224/3221225905/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-44
+http://[2409:8087:1a01:df::4077]/PLTV/88888888/224/3221225906/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-45
+http://[2409:8087:1a01:df::4055]/PLTV/88888888/224/3221225910/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-46
+http://[2409:8087:1a01:df::4076]/PLTV/88888888/224/3221225912/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-47
+http://[2409:8087:1a01:df::4027]/PLTV/88888888/224/3221225914/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-48
+http://[2409:8087:1a01:df::4076]/PLTV/88888888/224/3221226027/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-49
+http://[2409:8087:1a01:df::4068]/PLTV/88888888/224/3221226031/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-50
+http://[2409:8087:1a01:df::4062]/PLTV/88888888/224/3221226046/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-51
+http://[2409:8087:1a01:df::4041]/PLTV/88888888/224/3221226053/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-52
+http://[2409:8087:1a01:df::404d]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226124/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-53
+http://[2409:8087:1a01:df::403b]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226147/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-54
+http://[2409:8087:1a01:df::4033]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226398/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-55
+http://[2409:8087:1a01:df::402a]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226469/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/L5frXm2p/mg.jpg" group-title="咪咕",咪咕直播-56
+http://[2409:8087:1a01:df::4046]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226472/index.m3u8
+#EXTINF:-1 tvg-name="三立INEWS" group-title="港澳台",三立INEWS
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV01.m3u8
+#EXTINF:-1 tvg-name="寰宇新闻" group-title="港澳台",寰宇新闻
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV02.m3u8
+#EXTINF:-1 tvg-name="东森财经新闻" group-title="港澳台",东森财经新闻
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV03.m3u8
+#EXTINF:-1 tvg-name="运通财经F运通" group-title="港澳台",运通财经
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV06.m3u8
+#EXTINF:-1 tvg-name="信大" group-title="港澳台",信大
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV07.m3u8
+#EXTINF:-1 tvg-name="DW" group-title="港澳台",DW NEWS
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV08.m3u8
+#EXTINF:-1 tvg-name="中视新闻" group-title="港澳台",中视新闻
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV09.m3u8
+#EXTINF:-1 tvg-name="K-POP" group-title="港澳台",K-POP
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV16.m3u8
+#EXTINF:-1 tvg-name="民视新闻" group-title="港澳台",民视新闻
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV17.m3u8
+#EXTINF:-1 tvg-name="CCTV4" group-title="港澳台",CCTV4中文国际
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV20.m3u8
+#EXTINF:-1 tvg-name="凤凰资讯" group-title="港澳台",凤凰资讯
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV22.m3u8
+#EXTINF:-1 tvg-name="ABCNEWS" group-title="港澳台",ABC NEWS
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV24.m3u8
+#EXTINF:-1 tvg-name="台视新闻" group-title="港澳台",台视新闻
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV25.m3u8
+#EXTINF:-1 tvg-name="天才冲冲冲" group-title="港澳台",天才冲冲冲
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV26.m3u8
+#EXTINF:-1 tvg-name="ASTROAWANI" group-title="港澳台",ASTRO AWANI
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV27.m3u8
+#EXTINF:-1 tvg-name="中天新闻" group-title="港澳台",中天新闻
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV28.m3u8
+#EXTINF:-1 group-title="港澳台",Tokyo Shibuya「东京涩谷」
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV29.m3u8
+#EXTINF:-1 tvg-name="大爱" group-title="港澳台",大爱
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV30.m3u8
+#EXTINF:-1 tvg-name="TVBS新闻" group-title="港澳台",TVBS网路新闻
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV31.m3u8
+#EXTINF:-1 tvg-name="三立NEWS+" group-title="港澳台",三立NEWS+
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV32.m3u8
+#EXTINF:-1 tvg-name="CBNNEWS" group-title="港澳台",CBN NEWS
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV33.m3u8
+#EXTINF:-1 tvg-name="INDIATODAY" group-title="港澳台",INDIA TODAY
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV36.m3u8
+#EXTINF:-1 tvg-name="FRANCE24" group-title="港澳台",FRANCE 24
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV38.m3u8
+#EXTINF:-1 tvg-name="NBCNEWS" group-title="港澳台",NBC NEWS
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV39.m3u8
+#EXTINF:-1 tvg-name="凤凰中文" group-title="港澳台",凤凰中文
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV43.m3u8
+#EXTINF:-1 tvg-name="TBSNEWS" group-title="港澳台",TBS NEWS
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV45.m3u8
+#EXTINF:-1 tvg-name="大爱2" group-title="港澳台",大爱2
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV47.m3u8
+#EXTINF:-1 tvg-name="ANNNEWS" group-title="港澳台",ANN NEWS
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV48.m3u8
+#EXTINF:-1 group-title="港澳台",中天新闻「循环直播」
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV49.m3u8
+#EXTINF:-1 tvg-name="CNA" group-title="港澳台",CNA
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV52.m3u8
+#EXTINF:-1 tvg-name="HTBNEWS" group-title="港澳台",HTB NEWS
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV53.m3u8
+#EXTINF:-1 tvg-name="国会频道1" group-title="港澳台",国会频道1
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV56.m3u8
+#EXTINF:-1 tvg-name="国会频道2" group-title="港澳台",国会频道2
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV57.m3u8
+#EXTINF:-1 tvg-name="123goLIVE" group-title="港澳台",123 GO LIVE
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV58.m3u8
+#EXTINF:-1 tvg-name="半岛英语" group-title="港澳台",半岛新闻「英语」
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV59.m3u8
+#EXTINF:-1 tvg-name="KBSNEWS" group-title="港澳台",KBS NEWS
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV61.m3u8
+#EXTINF:-1 tvg-name="kansainews" group-title="港澳台",KANSAI NEWS
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV62.m3u8
+#EXTINF:-1 tvg-name="镜新闻" group-title="港澳台",镜新闻
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV70.m3u8
+#EXTINF:-1 tvg-name="Taiwan+" group-title="港澳台",Taiwan+
+https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV78.m3u8
+#EXTINF:-1 group-title="港澳台",香港国际财经
+https://hoytv-live-stream.hoy.tv/ch76/index-fhd.m3u8
+#EXTINF:-1 tvg-name="香港开电视" group-title="港澳台",HOY TV
+https://hoytv-live-stream.hoy.tv/ch77/index-fhd.m3u8
+#EXTINF:-1 group-title="港澳台",HOY 资讯台
+https://hoytv-live-stream.hoy.tv/ch78/index-fhd.m3u8
+#EXTINF:-1 group-title="港澳台",AnimalPlanet
+http://198.16.100.90:8278/AnimalPlanet/playlist.m3u8?tid=MC3C3856400538564005&ct=19225&tsum=6255ab9649411a8a70c7cbf2ebd7eb23
+#EXTINF:-1 group-title="港澳台",Awani
+http://198.16.100.90:8278/Awani/playlist.m3u8?tid=MB3B5555835155558351&ct=19225&tsum=148341f2ac3dfc57fd8bb8b2f6e4d190
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/AXN.png" group-title="港澳台",AXN 台灣
+http://50.7.238.114:8278/axn_twn/playlist.m3u8?tid=m1776995e9b3e16458394&ct=17874&tsum=b8a111d0b13c7761ce8b4e8f047adddb
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/BBCEARTH.png" group-title="港澳台",BBC Earth
+http://50.7.238.114:8278/bbcearth_twn/playlist.m3u8?tid=MD4D1422738714227387&ct=19254&tsum=2637e4976a40770c852fc6f4f9d2308f
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/BBCWORLDNEWS.png" group-title="港澳台",BBC World News
+http://50.7.238.114:8278/bbcnews_twn/playlist.m3u8?tid=ME2E9411781394117813&ct=19225&tsum=ffaa2caa60183eec89d730ed80b336d1
+#EXTINF:-1 group-title="港澳台",BBC1
+http://198.16.100.90:8278/bbc1_antik/playlist.m3u8?tid=MF5F6677034466770344&ct=19225&tsum=7620e8a88546352c525938a2dee63a56
+#EXTINF:-1 group-title="港澳台",BBC2
+http://198.16.100.90:8278/bbc2_antik/playlist.m3u8?tid=MA6A4519490645194906&ct=19225&tsum=9b7ac03eed5276fa8bda87e0e8e64ed1
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/BLOOMBERGTV.png" group-title="港澳台",Bloomberg
+http://50.7.238.114:8278/bloomberg_twn/playlist.m3u8?tid=MBDB5111864051118640&ct=19254&tsum=20e267ffc313070f5fff457700929457
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/CBSNEWS.png" group-title="港澳台",CBS News
+http://50.7.238.114:8278/cbsn_glo/playlist.m3u8?tid=ME2E7003518970035189&ct=19225&tsum=c1cc67ff59df6d6f608a400760be0bda
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/CNA.png" group-title="港澳台",CNA
+http://50.7.238.114:8278/cna/playlist.m3u8?tid=MFAF1272681512726815&ct=19225&tsum=4d6a781648283b1bb018bc5c098432d0
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/CNBCHONGKONG.png" group-title="港澳台",CNBC
+http://50.7.238.114:8278/cnbc_twn/playlist.m3u8?tid=MCBC5251518852515188&ct=19254&tsum=37bd48b924a593e126344eae8baec162
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/EVE.png" group-title="港澳台",ELEVEN 體育1台
+http://50.7.238.114:8278/golfchannel_twn/playlist.m3u8?tid=MFBF2798068027980680&ct=18393&tsum=d8204023f67120512c75a8882f121120
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/EYETV旅遊.png" group-title="港澳台",EYETV旅遊
+http://50.7.238.114:8278/eyetvtravel_twn/playlist.m3u8?tid=MFDF5066608450666084&ct=19254&tsum=0bb4cbfc0d32bff89ab5b3a5352fcf94
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/EYETV戲劇.png" group-title="港澳台",EYETV戲劇
+http://50.7.238.114:8278/eyetvxiju_twn/playlist.m3u8?tid=ME3E6686724066867240&ct=19254&tsum=728fc49fcd53cd770381ffd87883b1d1
+#EXTINF:-1 group-title="港澳台",EYETV戲劇
+http://198.16.100.90:8278/eyetvxiju_twn/playlist.m3u8?tid=m379e8846d31b14432367&ct=17874&tsum=2c4c2acd16a5a5e00797ad6f4c4cb586
+#EXTINF:-1 group-title="港澳台",GOODTVCH02真理台
+http://198.16.100.90:8278/good2_twn/playlist.m3u8?tid=ME9E3966510439665104&ct=19225&tsum=a2788b2ccea04a8a8082d663fb7838e5
+#EXTINF:-1 group-title="港澳台",M-BBCLifestyle
+http://198.16.100.90:8278/bbclifestyle_twn/playlist.m3u8?tid=MFCF4299842642998426&ct=19225&tsum=d9cac5a62e5c33574ac9c3e860e01623
+#EXTINF:-1 group-title="港澳台",M--SkyZ
+http://198.16.100.90:8278/skynews_antik/playlist.m3u8?tid=MA7A8995522289955222&ct=19225&tsum=017cd1040a70d579955560a0c550c0f2
+#EXTINF:-1 group-title="港澳台",MusicTV
+http://198.16.100.90:8278/MusicTV/playlist.m3u8?tid=MFEF2771586927715869&ct=19225&tsum=25aeb843227531bfab3d9fde062323b2
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/RHK31.png" group-title="港澳台",RHK31
+http://50.7.238.114:8278/rhk31_twn/playlist.m3u8?tid=MA6A6225600662256006&ct=19249&tsum=7b0adccccff4fded44e906e9d848ee35
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/RHK32.png" group-title="港澳台",RHK32
+http://50.7.238.114:8278/rhk32_twn/playlist.m3u8?tid=MDBD4704174447041744&ct=19249&tsum=763ebe53fc33677d02ebf83b4d558d33
+#EXTINF:-1 group-title="港澳台",RTHK32
+http://198.16.100.90:8278/rhk32_twn/playlist.m3u8?tid=MBCB4455322944553229&ct=19226&tsum=60bac13753ada5abc8873783d6611ebd
+#EXTINF:-1 group-title="港澳台",SkySportsCricket
+http://198.16.100.90:8278/tiankongcricket/playlist.m3u8?tid=MF0F2840305428403054&ct=19225&tsum=b212d3a5e0f928f816ba4653a3b31f6d
+#EXTINF:-1 group-title="港澳台",TLC旅遊生活
+http://198.16.100.90:8278/tlc_twn/playlist.m3u8?tid=MA0A5904082259040822&ct=19226&tsum=8fa7deead1d4b260825af15bc7378132
+#EXTINF:-1 group-title="港澳台",TV8
+http://198.16.100.90:8278/TV8/playlist.m3u8?tid=MDFD8437455184374551&ct=19225&tsum=ea08ca3d3651a75f499af2fc429eee35
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/J2.png" group-title="港澳台",TVB J2
+http://50.7.238.114:8278/j2_twn/playlist.m3u8?tid=MA8A1176878411768784&ct=19225&tsum=fea41bb592165942b9971148376f8b70
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/TVBS.png" group-title="港澳台",TVBS
+http://50.7.238.114:8278/tvbs/playlist.m3u8?tid=MDED5111960351119603&ct=19226&tsum=49931e2d3885c468d56ffae2c2db9e6e
+#EXTINF:-1 group-title="港澳台",TVBS
+http://198.16.100.90:8278/tvbs/playlist.m3u8?tid=MF8F6036660760366607&ct=19225&tsum=28b93d22eed82973d85656ff0a6978c5
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/TVBS.png" group-title="港澳台",TVBS歡樂台
+http://50.7.238.114:8278/tvbshuanle_twn/playlist.m3u8?ct=19193&tid=MC8C2318787923187879&tsum=394d2b9af3df7846e2cdc60d69dd4219
+#EXTINF:-1 group-title="港澳台",TVBS歡樂台
+http://198.16.100.90:8278/tvbshuanle_twn/playlist.m3u8?tid=MA9A4111409641114096&ct=19225&tsum=600f3056bba6413dec3155efd19e2d20
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/TVBS.png" group-title="港澳台",TVBS新聞
+http://50.7.238.114:8278/tvbs_n/playlist.m3u8?tid=MC3C9358473393584733&ct=19193&tsum=38970ab977b9e318cbead37db4134eb8
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/VIUTV.png" group-title="港澳台",ViuTV6
+http://50.7.238.114:8278/viusix_twn/playlist.m3u8?tid=MD7D9950629799506297&ct=19234&tsum=83ba3013be3e325b775bcd348b38eab1
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/阿里郎ARIRANG.png" group-title="港澳台",阿里郎 Arirang
+http://50.7.238.114:8278/arirang_twn/playlist.m3u8?tid=MF5F3988861839888618&ct=19249&tsum=781d490a6abe9f48f5b93e211cbe0307
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/愛爾達體育.png" group-title="港澳台",愛爾達體育1台
+http://50.7.238.114:8278/eltasport_twn/playlist.m3u8?tid=md3567b35401611916221&ct=17874&tsum=be2a069324faa7f0737ca0d396d43745
+#EXTINF:-1 group-title="港澳台",愛爾達體育1台
+http://198.16.100.90:8278/eltasport_twn/playlist.m3u8?tid=md3567b35401611916221&ct=17874&tsum=be2a069324faa7f0737ca0d396d43745
+#EXTINF:-1 group-title="港澳台",愛爾達體育1台
+http://198.16.100.90:8278/eltasport_twn/playlist.m3u8?tid=MF1F8884668388846683&ct=19249&tsum=b676f636b8ef285596dc6512fc4659d4
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/愛爾達體育2.png" group-title="港澳台",愛爾達體育2
+http://50.7.238.114:8278/eltasport2_twn/playlist.m3u8?tid=ME3E4844502848445028&ct=19317&tsum=035fc643389fcb4a6bf124bca1248aab
+#EXTINF:-1 group-title="港澳台",愛爾達體育2台
+http://198.16.100.90:8278/eltasport_twn/playlist.m3u8?tid=MB5B8133126081331260&ct=19225&tsum=5cb9d121709b107014d31cf856f3572e
+#EXTINF:-1 group-title="港澳台",愛爾達體育2台
+http://198.16.100.90:8278/eltasport2_twn/playlist.m3u8?tid=MB2B3966739039667390&ct=19249&tsum=20bdbd3a22909e8d89aabe7a923c8c5b
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/八大第一台.png" group-title="港澳台",八大第一台
+http://50.7.238.114:8278/badafirst/playlist.m3u8?tid=mb8efded78b4e12042621&ct=17874&tsum=028ad819cd9a0f949a043d652fa3e164
+#EXTINF:-1 group-title="港澳台",八大戲劇
+http://198.16.100.90:8278/badadrama/playlist.m3u8?tid=m4a65d3abd9ee13871929&ct=17924&tsum=8e5ef501e42d00cdc6a761ca3dc693d8
+#EXTINF:-1 group-title="港澳台",八大綜合
+http://198.16.100.90:8278/badazhonghe/playlist.m3u8?tid=mfb8d64b6276514171054&ct=17874&tsum=a87466c997089ea7dce98cd17301667d
+#EXTINF:-1 group-title="港澳台",博斯網球
+http://198.16.100.90:8278/bositennis_twn/playlist.m3u8?tid=m60f4fd9da4d1&ct=18335&tsum=4d026bfb332da29886aa772f2e149edb
+#EXTINF:-1 group-title="港澳台",博斯運動2
+http://198.16.100.90:8278/bosisport2_twn/playlist.m3u8?tid=ME9E7698135376981353&ct=19249&tsum=9eadcc8585f74357f09f1465844024c9
+#EXTINF:-1 group-title="港澳台",东森电影
+http://198.16.100.90:8278/ettvmovie/playlist.m3u8?tid=MEDE1688528216885282&ct=19193&tsum=843fbd698e260c1fcda128dce85ead3b
+#EXTINF:-1 group-title="港澳台",東森LIVE
+http://198.16.100.90:8278/ettvnews/playlist.m3u8?ct=19225&tid=MAEA2793211727932117&tsum=151345e2ab6bc0c89ac85598f1988cd3
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/東森洋片.png" group-title="港澳台",東森洋片
+http://198.16.100.90:8278/ettvwestern/playlist.m3u8?tid=mfdfc048e6c2416337202&ct=17874&tsum=cad39b26202d525ea820bee1d69e545f
+#EXTINF:-1 group-title="港澳台",東森綜合
+http://198.16.100.90:8278/ettvzhonghe/playlist.m3u8?tid=m65c4e525f24617101171&ct=17874&tsum=663db593cfeefc92ce4b5d7461988f3f
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/动物星球.png" group-title="港澳台",动物星球
+http://50.7.238.114:8278/animalplanet_twn/playlist.m3u8?tid=MABA3681856636818566&ct=18393&tsum=2066d4c793195f8449577d35af941288
+#EXTINF:-1 group-title="港澳台",非凡新聞
+http://198.16.100.90:8278/feifannews_twn/playlist.m3u8?tid=ME3E6962233269622332&ct=19225&tsum=eea4d84db71e12ba91bfcf328f4dec9d
+#EXTINF:-1 group-title="港澳台",公視
+http://198.16.100.90:8278/ctv_taiwan/playlist.m3u8?tid=MDCD6096520560965205&ct=19249&tsum=64237c7ffa0c00b62657a938247bcab0
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/靖天國際台.png" group-title="港澳台",靖天國際台
+http://50.7.238.114:8278/jingtianintl_twn/playlist.m3u8?tid=MC7C4153806141538061&ct=19254&tsum=79854f3ccdc23693ea39da52af54d35b
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/靖天卡通台.png" group-title="港澳台",靖天卡通
+http://50.7.238.114:8278/jingtiancartoon_twn/playlist.m3u8?tid=m1465dab025b5&ct=18335&tsum=ba935e583d90bfbe1d1d9662e9ac600c
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/民視臺灣.png" group-title="港澳台",民視臺灣
+http://50.7.238.114:8278/ftvtaiwan_twn/playlist.m3u8?tid=MDFD8196635981966359&ct=19226&tsum=b82639ac8b4590b4206effe348e2f9c2
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/三立台灣.png" group-title="港澳台",三立台灣
+http://198.16.100.90:8278/sanlitaiwan/playlist.m3u8?tid=m92ccadc4dc3718157816&ct=17874&tsum=3570a8198ca0fb7ebb803807e38b33fb
+#EXTINF:-1 group-title="港澳台",三立戏剧台
+http://198.16.100.90:8278/sanlixiju_twn/playlist.m3u8?tid=MCFC5174201151742011&ct=19193&tsum=27477ddeec029345da276c2c903f09c2
+#EXTINF:-1 group-title="港澳台",探索亞洲
+http://198.16.100.90:8278/discoverytwn_twn/playlist.m3u8?tid=m42a2d91d6f2413622196&ct=17874&tsum=3653c4c61f0a0443dbb256dc465b4715
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/緯來日本.png" group-title="港澳台",緯來日本
+http://50.7.238.114:8278/videolandjapan/playlist.m3u8?tid=MBAB7250273772502737&ct=19344&tsum=2b580b485643235654de4a1bbc9639cb
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/衛視中文.png" group-title="港澳台",衛視中文
+http://50.7.238.114:8278/weishichinese_twn/playlist.m3u8?ct=19226&tid=MA8A7894022878940228&tsum=c0323ce59263e0096d4181626874e17c
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/中視經典.png" group-title="港澳台",中視經典
+http://198.16.100.90:8278/zhongshi_twn/playlist.m3u8?tid=14379667&ct=17988&tsum=de63d02f44741580b5070077d1949841
+#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/中天娛樂.png" group-title="港澳台",中天娛樂
+http://50.7.238.114:8278/ctient/playlist.m3u8?tid=MDED1780059017800590&ct=19226&tsum=4d05ea700aa8fd436b51ce703680e674
