@@ -147,12 +147,6 @@ http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001223/index.m3u8?lov
 http://[2409:8087:5e01:34::21]:6610/ZTE_CMS/08984400000000060000000000000319/index.m3u8?IAS
 #EXTINF:-1 tvg-id="46" tvg-name="黑龙江卫视" tvg-logo="https://live.fanmingming.com/tv/黑龙江卫视.png" group-title="卫视",黑龙江卫视
 http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001031/index.m3u8?love=freedom
-#EXTINF:-1 tvg-id="143" tvg-name="凤凰香港" tvg-logo="https://live.fanmingming.com/tv/%E5%87%A4%E5%87%B0%E5%8D%AB%E8%A7%86%E9%A6%99%E6%B8%AF%E5%8F%B0.png" group-title="数字",凤凰香港
-http://[2409:8087:2001:20:2800:0:df6e:eb1d]/ott.mobaibox.com/PLTV/3/224/3221228530/1.m3u8
-#EXTINF:-1 tvg-id="141" tvg-name="凤凰中文" tvg-logo="https://live.fanmingming.com/tv/%E5%87%A4%E5%87%B0%E4%B8%AD%E6%96%87.png" group-title="数字",凤凰中文
-http://[2409:8087:2001:20:2800:0:df6e:eb27]/ott.mobaibox.com/PLTV/3/224/3221228524/index.m3u8
-#EXTINF:-1 tvg-id="142" tvg-name="凤凰资讯" tvg-logo="https://live.fanmingming.com/tv/%E5%87%A4%E5%87%B0%E8%B5%84%E8%AE%AF.png" group-title="数字",凤凰资讯
-http://[2409:8087:2001:20:2800:0:df6e:eb24]/ott.mobaibox.com/PLTV/3/224/3221228527/index.m3u8
 #EXTINF:-1 tvg-id="1985" tvg-name="第一财经" tvg-logo="https://live.fanmingming.com/tv/%E4%B8%8A%E6%B5%B7%E7%AC%AC%E4%B8%80%E8%B4%A2%E7%BB%8F.png" group-title="数字",第一财经
 http://[2409:8087:1e03:21::36]:6610/cms001/ch00000090990000001017/index.m3u8?love=freedom
 #EXTINF:-1 tvg-id="2025" tvg-name="金鹰纪实" tvg-logo="https://live.fanmingming.com/tv/%E9%87%91%E9%B9%B0%E7%BA%AA%E5%AE%9E.png" group-title="数字",金鹰纪实
